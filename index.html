@@ -18,18 +18,55 @@
 
     <style>
         :root {
+            /* Palette 1: Classic Wood (default) */
             --primary: #8B6F47;
             --primary-light: #A0845C;
             --primary-dark: #6B5438;
             --accent: #D4A574;
+            --bg: #FAFAF8;
             --text-dark: #2C2C2C;
             --text-light: #F5F5F5;
+        }
+
+        body.palette-modern {
+            --primary: #1F2937;
+            --primary-light: #374151;
+            --primary-dark: #111827;
+            --accent: #3B82F6;
+            --bg: #F9FAFB;
+            --text-dark: #111827;
+            --text-light: #F3F4F6;
+        }
+
+        body.palette-nature {
+            --primary: #059669;
+            --primary-light: #10B981;
+            --primary-dark: #047857;
+            --accent: #34D399;
+            --bg: #F0FDF4;
+            --text-dark: #065F46;
+            --text-light: #ECFDF5;
+        }
+
+        body.palette-elegant {
+            --primary: #7C3AED;
+            --primary-light: #A78BFA;
+            --primary-dark: #6D28D9;
+            --accent: #DDD6FE;
+            --bg: #FAF5FF;
+            --text-dark: #4C1D95;
+            --text-light: #F3E8FF;
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             color: var(--text-dark);
             line-height: 1.6;
+            background: white;
         }
 
         h1, h2, h3 { font-family: 'Georgia', serif; letter-spacing: -0.03em; }
@@ -41,6 +78,8 @@
             border-radius: 0.5rem;
             font-weight: 500;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-primary:hover {
@@ -57,6 +96,7 @@
             border-radius: 0.5rem;
             font-weight: 500;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .btn-secondary:hover {
@@ -80,6 +120,9 @@
             flex-direction: column;
             cursor: pointer;
             gap: 6px;
+            background: none;
+            border: none;
+            padding: 0;
         }
 
         .burger-menu span {
@@ -139,12 +182,54 @@
         .review-card {
             border-left: 4px solid var(--primary);
             padding: 20px;
-            background: #FAFAF8;
+            background: var(--bg);
         }
+
+        .design-switcher {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 100;
+            background: white;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .design-switcher button {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 2px solid #E5E7EB;
+            cursor: pointer;
+            margin: 4px;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .design-switcher button.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .design-switcher button:hover {
+            border-color: var(--primary);
+        }
+
+        .palette-1 { background: #8B6F47; }
+        .palette-2 { background: #1F2937; }
+        .palette-3 { background: #059669; }
+        .palette-4 { background: #7C3AED; }
 
         @media (max-width: 768px) {
             .burger-menu { display: flex; }
             .nav-desktop { display: none; }
+            .design-switcher {
+                bottom: 16px;
+                right: 16px;
+            }
         }
 
         @media (min-width: 769px) {
@@ -153,6 +238,15 @@
     </style>
 </head>
 <body class="bg-white">
+    <!-- Design Switcher -->
+    <div class="design-switcher">
+        <div style="font-size: 10px; font-weight: bold; color: #666; text-align: center; margin-bottom: 8px; display: block; width: 100%;">Design</div>
+        <button class="palette-1 active" onclick="switchPalette('classic')" title="Classic Wood"></button>
+        <button class="palette-2" onclick="switchPalette('modern')" title="Modern"></button>
+        <button class="palette-3" onclick="switchPalette('nature')" title="Nature"></button>
+        <button class="palette-4" onclick="switchPalette('elegant')" title="Elegant"></button>
+    </div>
+
     <!-- Navigation -->
     <nav class="fixed top-0 left-0 right-0 bg-transparent transition-all duration-300 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -164,6 +258,7 @@
             <div class="nav-desktop flex items-center gap-8">
                 <a href="#leistungen" class="text-sm font-medium transition hover:text-[var(--primary)]">Leistungen</a>
                 <a href="#about" class="text-sm font-medium transition hover:text-[var(--primary)]">Über uns</a>
+                <a href="#gallery" class="text-sm font-medium transition hover:text-[var(--primary)]">Galerie</a>
                 <a href="#reviews" class="text-sm font-medium transition hover:text-[var(--primary)]">Bewertungen</a>
                 <a href="#contact" class="text-sm font-medium transition hover:text-[var(--primary)]">Kontakt</a>
             </div>
@@ -183,6 +278,7 @@
     <div class="mobile-menu">
         <a href="#leistungen">Leistungen</a>
         <a href="#about">Über uns</a>
+        <a href="#gallery">Galerie</a>
         <a href="#reviews">Bewertungen</a>
         <a href="#contact">Kontakt</a>
         <button class="btn-primary w-full">Angebot anfordern</button>
@@ -191,7 +287,7 @@
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center overflow-hidden pt-20">
         <div class="absolute inset-0 z-0">
-            <img src="/content/company_images/shutterstock_2605531547.jpg" alt="Handwerk Schreiner" class="w-full h-full object-cover">
+            <img src="content/company_images/shutterstock_2605531547.jpg" alt="Handwerk Schreiner" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
         </div>
 
@@ -212,7 +308,7 @@
         </div>
     </section>
 
-    <!-- Leistungen -->
+    <!-- Leistungen / Features -->
     <section id="leistungen" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
@@ -233,7 +329,7 @@
                     </div>
                     <h3 class="text-xl font-bold mb-3">Möbelbau</h3>
                     <p class="text-gray-600">
-                        Maßgefertigte Möbelstücke, die perfekt in Ihre Räume passen. Von eleganten Schränken bis zu funktionalen Regalsystemen – alles nach Ihren Wünschen.
+                        Maßgefertigte Möbelstücke, die perfekt in Ihre Räume passen. Von eleganten Schränken bis zu funktionalen Regalsystemen.
                     </p>
                 </div>
 
@@ -246,7 +342,7 @@
                     </div>
                     <h3 class="text-xl font-bold mb-3">Innenausbau</h3>
                     <p class="text-gray-600">
-                        Kundenspezifische Lösungen für Wohn- und Arbeitsräume. Funktionalität und Design in perfektem Einklang – für Ihr Zuhause oder Büro.
+                        Kundenspezifische Lösungen für Wohn- und Arbeitsräume. Funktionalität und Design in perfektem Einklang.
                     </p>
                 </div>
 
@@ -259,20 +355,75 @@
                     </div>
                     <h3 class="text-xl font-bold mb-3">Außenprojekte</h3>
                     <p class="text-gray-600">
-                        Pergolen, Carports und Terrassen aus hochwertigem Holz. Schaffen Sie Ihren privaten Rückzugsort – vollständig maßgefertigt.
+                        Pergolen, Carports und Terrassen aus hochwertigem Holz. Schaffen Sie Ihren privaten Rückzugsort.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24" style="background: var(--bg);">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <p class="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-2">Portfolio</p>
+                <h2 class="text-4xl sm:text-5xl font-bold mb-4">Unsere Arbeiten</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                    Lassen Sie sich von unseren Projekten inspirieren. Jedes Stück ist eine Meisterleistung handwerklicher Kunst.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="relative overflow-hidden rounded-lg shadow-lg h-64 group">
+                    <img src="content/company_images/shutterstock_2614182823.jpg" alt="Innenausbau Projekt" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end">
+                        <p class="text-white p-4 font-semibold">Innenausbau</p>
+                    </div>
+                </div>
+
+                <div class="relative overflow-hidden rounded-lg shadow-lg h-64 group">
+                    <img src="content/company_images/shutterstock_2614182419.jpg" alt="Möbelbau Projekt" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end">
+                        <p class="text-white p-4 font-semibold">Möbelbau</p>
+                    </div>
+                </div>
+
+                <div class="relative overflow-hidden rounded-lg shadow-lg h-64 group">
+                    <img src="content/company_images/shutterstock_2611051657.jpg" alt="Holzarbeiten" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end">
+                        <p class="text-white p-4 font-semibold">Holzarbeiten</p>
+                    </div>
+                </div>
+
+                <div class="relative overflow-hidden rounded-lg shadow-lg h-64 group">
+                    <img src="content/company_images/shutterstock_2678830799.jpg" alt="Außenprojekt" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end">
+                        <p class="text-white p-4 font-semibold">Außenprojekt</p>
+                    </div>
+                </div>
+
+                <div class="relative overflow-hidden rounded-lg shadow-lg h-64 group">
+                    <img src="content/company_images/shutterstock_2678830781.jpg" alt="Möbeldetail" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end">
+                        <p class="text-white p-4 font-semibold">Möbeldetail</p>
+                    </div>
+                </div>
+
+                <div class="relative overflow-hidden rounded-lg shadow-lg h-64 group">
+                    <img src="content/company_images/shutterstock_2675341073.jpg" alt="Schreinerwork" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end">
+                        <p class="text-white p-4 font-semibold">Schreinerwork</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
-    <section id="about" class="py-24 bg-[#FAFAF8]">
+    <section id="about" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <img src="/content/company_images/shutterstock_2614182823.jpg" alt="Schreiner bei der Arbeit" class="rounded-lg shadow-lg">
-                </div>
+                <img src="content/company_images/shutterstock_2614618769.jpg" alt="Schreiner bei der Arbeit" class="rounded-lg shadow-lg">
                 <div>
                     <p class="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-4">Über uns</p>
                     <h2 class="text-4xl font-bold mb-6">Tradition mit Herz & Handwerk</h2>
@@ -289,7 +440,7 @@
     </section>
 
     <!-- Reviews Section -->
-    <section id="reviews" class="py-24 bg-white">
+    <section id="reviews" class="py-24" style="background: var(--bg);">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
                 <p class="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-2">Was Kunden sagen</p>
@@ -300,59 +451,39 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- Review 1 -->
                 <div class="review-card">
-                    <div class="flex gap-1 mb-3">
-                        <span class="text-lg">★★★★★</span>
-                    </div>
+                    <div class="flex gap-1 mb-3"><span class="text-lg">★★★★★</span></div>
                     <p class="font-semibold text-gray-900 mb-2">Patrick Kraus</p>
                     <p class="text-gray-600 italic mb-2">vor 2 Jahren</p>
-                    <p class="text-gray-700">
-                        "Alles top! Sehr zu empfehlen! Danke"
-                    </p>
+                    <p class="text-gray-700">"Alles top! Sehr zu empfehlen! Danke"</p>
                 </div>
 
-                <!-- Review 2 -->
                 <div class="review-card">
-                    <div class="flex gap-1 mb-3">
-                        <span class="text-lg">★★★★★</span>
-                    </div>
+                    <div class="flex gap-1 mb-3"><span class="text-lg">★★★★★</span></div>
                     <p class="font-semibold text-gray-900 mb-2">Brigitte Touil</p>
                     <p class="text-gray-600 italic mb-2">vor 4 Jahren</p>
-                    <p class="text-gray-700">
-                        "Herr Schönbrunn hat genau vermessen und eine perfekte Lösung geschaffen. Sehr professionell und zuverlässig!"
-                    </p>
+                    <p class="text-gray-700">"Herr Schönbrunn hat genau vermessen und eine perfekte Lösung geschaffen!"</p>
                 </div>
 
-                <!-- Review 3 -->
                 <div class="review-card">
-                    <div class="flex gap-1 mb-3">
-                        <span class="text-lg">★★★★★</span>
-                    </div>
+                    <div class="flex gap-1 mb-3"><span class="text-lg">★★★★★</span></div>
                     <p class="font-semibold text-gray-900 mb-2">Dietmar Baier</p>
                     <p class="text-gray-600 italic mb-2">vor 3 Jahren</p>
-                    <p class="text-gray-700">
-                        "Qualitätsarbeit auf höchstem Niveau. Genaue Handwerkskunst und kundenfreundlicher Service!"
-                    </p>
+                    <p class="text-gray-700">"Qualitätsarbeit auf höchstem Niveau. Genaue Handwerkskunst!"</p>
                 </div>
 
-                <!-- Review 4 -->
                 <div class="review-card">
-                    <div class="flex gap-1 mb-3">
-                        <span class="text-lg">★★★★★</span>
-                    </div>
+                    <div class="flex gap-1 mb-3"><span class="text-lg">★★★★★</span></div>
                     <p class="font-semibold text-gray-900 mb-2">Tobias Althoff</p>
                     <p class="text-gray-600 italic mb-2">vor 5 Jahren</p>
-                    <p class="text-gray-700">
-                        "Wunderbare Arbeit! Der Schreiner hat sich Zeit genommen und alles perfekt angefertigt."
-                    </p>
+                    <p class="text-gray-700">"Wunderbare Arbeit! Der Schreiner hat alles perfekt angefertigt."</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-24 bg-[#FAFAF8]">
+    <section id="contact" class="py-24 bg-white">
         <div class="max-w-4xl mx-auto px-6">
             <div class="text-center mb-16">
                 <p class="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-2">Kontakt</p>
@@ -363,7 +494,6 @@
             </div>
 
             <div class="grid md:grid-cols-3 gap-8 mb-12">
-                <!-- Phone -->
                 <div class="text-center">
                     <div class="w-16 h-16 rounded-lg mx-auto mb-4" style="background: var(--primary);">
                         <svg class="w-8 h-8 m-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -371,10 +501,9 @@
                         </svg>
                     </div>
                     <h3 class="font-bold mb-2">Telefon</h3>
-                    <a href="tel:0221599194" class="text-[var(--primary)] font-semibold hover:underline">0221 5991941</a>
+                    <a href="tel:+4922159991941" class="text-[var(--primary)] font-semibold hover:underline">0221 5991941</a>
                 </div>
 
-                <!-- Email -->
                 <div class="text-center">
                     <div class="w-16 h-16 rounded-lg mx-auto mb-4" style="background: var(--primary);">
                         <svg class="w-8 h-8 m-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -385,7 +514,6 @@
                     <a href="mailto:info@schreinerei-schoenbrunn.de" class="text-[var(--primary)] font-semibold hover:underline">info@schreinerei-schoenbrunn.de</a>
                 </div>
 
-                <!-- Address -->
                 <div class="text-center">
                     <div class="w-16 h-16 rounded-lg mx-auto mb-4" style="background: var(--primary);">
                         <svg class="w-8 h-8 m-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -398,8 +526,7 @@
                 </div>
             </div>
 
-            <!-- Contact Form -->
-            <form class="bg-white p-8 rounded-lg shadow-lg">
+            <form class="bg-white p-8 rounded-lg shadow-lg" style="background: var(--bg);">
                 <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <input type="text" placeholder="Ihr Name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--primary)]" required>
                     <input type="email" placeholder="Ihre E-Mail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--primary)]" required>
@@ -412,7 +539,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-[var(--text-dark)] text-white py-12">
+    <footer style="background: var(--text-dark); color: white;" class="py-12">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-8 mb-8">
                 <div>
@@ -455,8 +582,39 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
+        // Design Palette Switcher
+        function switchPalette(palette) {
+            document.body.className = document.body.className.replace(/palette-\w+/g, '');
+
+            const paletteMap = {
+                'classic': '',
+                'modern': 'palette-modern',
+                'nature': 'palette-nature',
+                'elegant': 'palette-elegant'
+            };
+
+            if (paletteMap[palette]) {
+                document.body.classList.add(paletteMap[palette]);
+            }
+
+            // Update active button
+            document.querySelectorAll('.design-switcher button').forEach((btn, i) => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Save preference
+            localStorage.setItem('selectedPalette', palette);
+        }
+
+        // Load saved palette preference
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('selectedPalette') || 'classic';
+            const buttons = document.querySelectorAll('.design-switcher button');
+            buttons[['classic', 'modern', 'nature', 'elegant'].indexOf(saved)].click();
+        });
+
         // Mobile Menu Toggle
         document.querySelector('.burger-menu').addEventListener('click', function() {
             this.classList.toggle('active');

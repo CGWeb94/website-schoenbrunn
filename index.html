@@ -47,47 +47,6 @@
             --shadow-color: 40, 30, 10;
         }
 
-        body.palette-modern {
-            --primary: #1E293B;
-            --primary-light: #334155;
-            --primary-dark: #0F172A;
-            --accent: #3B82F6;
-            --accent-soft: #DBEAFE;
-            --surface: #F8FAFC;
-            --surface-elevated: #FFFFFF;
-            --text: #0F172A;
-            --text-muted: #64748B;
-            --border: #E2E8F0;
-            --shadow-color: 15, 23, 42;
-        }
-
-        body.palette-forest {
-            --primary: #1B4332;
-            --primary-light: #2D6A4F;
-            --primary-dark: #14332A;
-            --accent: #52B788;
-            --accent-soft: #D8F3DC;
-            --surface: #F5FBF7;
-            --surface-elevated: #FFFFFF;
-            --text: #1B4332;
-            --text-muted: #588B73;
-            --border: #D8F3DC;
-            --shadow-color: 27, 67, 50;
-        }
-
-        body.palette-warm {
-            --primary: #92400E;
-            --primary-light: #B45309;
-            --primary-dark: #78350F;
-            --accent: #F59E0B;
-            --accent-soft: #FEF3C7;
-            --surface: #FFFBEB;
-            --surface-elevated: #FFFFFF;
-            --text: #451A03;
-            --text-muted: #92400E;
-            --border: #FDE68A;
-            --shadow-color: 146, 64, 14;
-        }
 
         /* ===== BASE STYLES ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -101,8 +60,9 @@
         }
 
         h1, h2, h3, h4 {
-            font-family: 'Playfair Display', Georgia, serif;
-            letter-spacing: -0.03em;
+            font-family: 'Inter', -apple-system, sans-serif;
+            letter-spacing: -0.04em;
+            font-weight: 800;
             line-height: 1.15;
         }
 
@@ -895,76 +855,6 @@
             width: 100%;
         }
 
-        /* ===== DESIGN SWITCHER ===== */
-        .design-switcher {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 200;
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            min-width: 160px;
-        }
-
-        .switcher-label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-
-        .switcher-colors { display: flex; gap: 8px; }
-
-        .swatch {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .swatch:hover { transform: scale(1.1); }
-        .swatch.active { border-color: var(--text); box-shadow: 0 0 0 2px var(--surface-elevated), 0 0 0 4px var(--text); }
-
-        .swatch-classic { background: #8B6914; }
-        .swatch-modern { background: #1E293B; }
-        .swatch-forest { background: #1B4332; }
-        .swatch-warm { background: #B45309; }
-
-        .switcher-fonts { display: flex; gap: 6px; margin-top: 4px; }
-
-        .font-btn {
-            flex: 1;
-            padding: 6px 8px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            background: var(--surface);
-            cursor: pointer;
-            font-size: 0.7rem;
-            font-weight: 500;
-            text-align: center;
-            color: var(--text-muted);
-            transition: all 0.2s;
-        }
-
-        .font-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-        .font-btn:hover:not(.active) { border-color: var(--primary); color: var(--primary); }
-
-        body.font-modern h1, body.font-modern h2, body.font-modern h3, body.font-modern h4 {
-            font-family: 'Inter', sans-serif;
-            letter-spacing: -0.04em;
-            font-weight: 800;
-        }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
@@ -991,27 +881,10 @@
             .contact-cards { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
             .hero-images { display: none; }
-            .design-switcher { bottom: 16px; right: 16px; min-width: 140px; padding: 12px; }
         }
     </style>
 </head>
 <body>
-
-    <!-- ===== DESIGN SWITCHER ===== -->
-    <div class="design-switcher">
-        <div class="switcher-label">Farbschema</div>
-        <div class="switcher-colors">
-            <div class="swatch swatch-classic active" data-palette="classic" title="Klassisch"></div>
-            <div class="swatch swatch-modern" data-palette="modern" title="Modern"></div>
-            <div class="swatch swatch-forest" data-palette="forest" title="Natur"></div>
-            <div class="swatch swatch-warm" data-palette="warm" title="Warm"></div>
-        </div>
-        <div class="switcher-label" style="margin-top: 8px;">Schriftart</div>
-        <div class="switcher-fonts">
-            <button class="font-btn active" data-font="serif">Serif</button>
-            <button class="font-btn" data-font="modern">Modern</button>
-        </div>
-    </div>
 
     <!-- ===== NAVIGATION ===== -->
     <nav class="site-nav" role="navigation">
@@ -1460,41 +1333,6 @@
 
     <!-- ===== SCRIPTS ===== -->
     <script>
-        // ── Design Switcher ──
-        document.querySelectorAll('.swatch').forEach(swatch => {
-            swatch.addEventListener('click', () => {
-                const palette = swatch.dataset.palette;
-                document.body.className = document.body.className.replace(/palette-\w+/g, '').trim();
-                if (palette !== 'classic') document.body.classList.add('palette-' + palette);
-
-                document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
-                swatch.classList.add('active');
-                localStorage.setItem('palette', palette);
-            });
-        });
-
-        document.querySelectorAll('.font-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const font = btn.dataset.font;
-                document.body.classList.remove('font-modern');
-                if (font === 'modern') document.body.classList.add('font-modern');
-
-                document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                localStorage.setItem('font', font);
-            });
-        });
-
-        // Restore preferences
-        const savedPalette = localStorage.getItem('palette');
-        if (savedPalette && savedPalette !== 'classic') {
-            document.querySelector(`.swatch[data-palette="${savedPalette}"]`)?.click();
-        }
-        const savedFont = localStorage.getItem('font');
-        if (savedFont === 'modern') {
-            document.querySelector('.font-btn[data-font="modern"]')?.click();
-        }
-
         // ── Mobile Nav ──
         const burger = document.querySelector('.burger');
         const overlay = document.querySelector('.mobile-overlay');

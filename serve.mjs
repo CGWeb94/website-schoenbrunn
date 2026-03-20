@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PORT = 3001;
+const PORT = 3002;
 
 const server = http.createServer((req, res) => {
     let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url);

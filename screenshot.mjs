@@ -13,7 +13,7 @@ async function screenshot() {
 
         // Desktop screenshot (1440px)
         await page.setViewport({ width: 1440, height: 900 });
-        await page.goto('http://localhost:3001', { waitUntil: 'networkidle2' });
+        await page.goto('http://localhost:3002', { waitUntil: 'networkidle2' });
 
         // Wait for animations to load and complete
         await page.evaluate(() => {
@@ -30,7 +30,7 @@ async function screenshot() {
 
         // Mobile screenshot (375px)
         await page.setViewport({ width: 375, height: 812 });
-        await page.goto('http://localhost:3001', { waitUntil: 'networkidle2' });
+        await page.goto('http://localhost:3002', { waitUntil: 'networkidle2' });
 
         await page.evaluate(() => {
             if (window.gsap) {

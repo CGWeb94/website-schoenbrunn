@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schreinerei Schönbrunn – Handgefertigte Möbel & Innenausbau in Köln</title>
+    <meta name="description" content="Traditionsreicher Familienbetrieb seit 1968. Maßgefertigte Möbel, Innenausbau und Außenprojekte aus Holz in Köln. Qualität und Handwerk seit Generationen.">
+    <meta name="keywords" content="Schreinerei Köln, Maßmöbel, Innenausbau, Holzarbeiten, Schreiner Köln-Longerich, Carports, Pergolen, Terrassen">
+    <meta property="og:title" content="Schreinerei Schönbrunn – Maßgefertigte Möbel in Köln">
+    <meta property="og:description" content="Seit 1968 handwerkliche Exzellenz. Möbelbau, Innenausbau und Außenprojekte aus hochwertigem Holz.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://schreinerei-schoenbrunn.de">
+    <link rel="canonical" href="https://schreinerei-schoenbrunn.de">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #8B6F47;
+            --primary-light: #A0845C;
+            --primary-dark: #6B5438;
+            --accent: #D4A574;
+            --text-dark: #2C2C2C;
+            --text-light: #F5F5F5;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { font-family: 'Georgia', serif; letter-spacing: -0.03em; }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(139, 111, 71, 0.15);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        nav {
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 50;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+        }
+
+        .burger-menu span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-dark);
+            transition: all 0.3s ease;
+            border-radius: 1px;
+        }
+
+        .burger-menu.active span:nth-child(1) { transform: rotate(45deg) translate(8px, 8px); }
+        .burger-menu.active span:nth-child(2) { opacity: 0; }
+        .burger-menu.active span:nth-child(3) { transform: rotate(-45deg) translate(8px, -8px); }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            z-index: 40;
+            padding: 80px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-menu a {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-card {
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            background: #FAFAF8;
+        }
+
+        @media (max-width: 768px) {
+            .burger-menu { display: flex; }
+            .nav-desktop { display: none; }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu { display: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-transparent transition-all duration-300 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="text-2xl font-bold" style="color: var(--primary);">
+                Schönbrunn
+            </a>
+
+            <!-- Desktop Nav -->
+            <div class="nav-desktop flex items-center gap-8">
+                <a href="#leistungen" class="text-sm font-medium transition hover:text-[var(--primary)]">Leistungen</a>
+                <a href="#about" class="text-sm font-medium transition hover:text-[var(--primary)]">Über uns</a>
+                <a href="#reviews" class="text-sm font-medium transition hover:text-[var(--primary)]">Bewertungen</a>
+                <a href="#contact" class="text-sm font-medium transition hover:text-[var(--primary)]">Kontakt</a>
+            </div>
+
+            <button class="btn-primary hidden sm:block">Angebot anfordern</button>
+
+            <!-- Mobile Burger -->
+            <button class="burger-menu" aria-label="Menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="#leistungen">Leistungen</a>
+        <a href="#about">Über uns</a>
+        <a href="#reviews">Bewertungen</a>
+        <a href="#contact">Kontakt</a>
+        <button class="btn-primary w-full">Angebot anfordern</button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center overflow-hidden pt-20">
+        <div class="absolute inset-0 z-0">
+            <img src="/content/company_images/shutterstock_2605531547.jpg" alt="Handwerk Schreiner" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 py-24 w-full">
+            <div class="max-w-2xl">
+                <p class="text-[var(--accent)] font-semibold text-sm tracking-widest uppercase mb-4">Seit 1968</p>
+                <h1 class="text-5xl sm:text-6xl font-bold text-white mb-6 leading-tight">
+                    Handwerk trifft Leidenschaft
+                </h1>
+                <p class="text-lg text-white/90 mb-8 leading-relaxed max-w-xl">
+                    Maßgefertigte Möbel und hochwertiger Innenausbau aus Holz. Qualität und Tradition seit Generationen.
+                </p>
+                <div class="flex gap-4 flex-wrap">
+                    <button class="btn-primary">Beratung buchen</button>
+                    <button class="btn-secondary">Galerie ansehen</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leistungen -->
+    <section id="leistungen" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <p class="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-2">Unser Angebot</p>
+                <h2 class="text-4xl sm:text-5xl font-bold mb-4">Was wir für Sie schaffen</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                    Von maßgefertigten Möbeln bis zu kompletten Innenauslösungen – wir bringen Ihre Träume aus Holz zum Leben.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card">
+                    <div class="w-12 h-12 rounded-lg mb-4" style="background: var(--primary);">
+                        <svg class="w-6 h-6 m-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Möbelbau</h3>
+                    <p class="text-gray-600">
+                        Maßgefertigte Möbelstücke, die perfekt in Ihre Räume passen. Von eleganten Schränken bis zu funktionalen Regalsystemen – alles nach Ihren Wünschen.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="card">
+                    <div class="w-12 h-12 rounded-lg mb-4" style="background: var(--primary);">
+                        <svg class="w-6 h-6 m-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v6h-6m0 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16m0-6h6"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Innenausbau</h3>
+                    <p class="text-gray-600">
+                        Kundenspezifische Lösungen für Wohn- und Arbeitsräume. Funktionalität und Design in perfektem Einklang – für Ihr Zuhause oder Büro.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="card">
+                    <div class="w-12 h-12 rounded-lg mb-4" style="background: var(--primary);">
+                        <svg class="w-6 h-6 m-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 0 0 8.646 3.646 9.003 9.003 0 0 0 12 21a9.003 9.003 0 0 0 8.354-5.646z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Außenprojekte</h3>
+                    <p class="text-gray-600">
+                        Pergolen, Carports und Terrassen aus hochwertigem Holz. Schaffen Sie Ihren privaten Rückzugsort – vollständig maßgefertigt.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-[#FAFAF8]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <img src="/content/company_images/shutterstock_2614182823.jpg" alt="Schreiner bei der Arbeit" class="rounded-lg shadow-lg">
+                </div>
+                <div>
+                    <p class="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-4">Über uns</p>
+                    <h2 class="text-4xl font-bold mb-6">Tradition mit Herz & Handwerk</h2>
+                    <p class="text-gray-600 mb-4 text-lg leading-relaxed">
+                        Seit 1968 ist die Schreinerei Schönbrunn ein traditionsreicher Familienbetrieb in Köln-Longerich. Wir verbinden die Leidenschaft für klassisches Handwerk mit modernen Techniken.
+                    </p>
+                    <p class="text-gray-600 mb-6 text-lg leading-relaxed">
+                        Jedes Projekt ist für uns eine neue Chance, zu zeigen, dass Qualität, Liebe zum Detail und maßgeschneiderte Lösungen rund ums Holz möglich sind. Ihre Zufriedenheit ist unser höchstes Ziel.
+                    </p>
+                    <button class="btn-primary">Jetzt kontaktieren</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <p class="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-2">Was Kunden sagen</p>
+                <h2 class="text-4xl sm:text-5xl font-bold mb-4">Bewertungen & Erfahrungen</h2>
+                <div class="flex justify-center gap-1 mb-4">
+                    <span class="text-2xl">★★★★☆</span> <span class="text-lg text-gray-600 ml-2">4,47 von 5 Sternen</span>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Review 1 -->
+                <div class="review-card">
+                    <div class="flex gap-1 mb-3">
+                        <span class="text-lg">★★★★★</span>
+                    </div>
+                    <p class="font-semibold text-gray-900 mb-2">Patrick Kraus</p>
+                    <p class="text-gray-600 italic mb-2">vor 2 Jahren</p>
+                    <p class="text-gray-700">
+                        "Alles top! Sehr zu empfehlen! Danke"
+                    </p>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-card">
+                    <div class="flex gap-1 mb-3">
+                        <span class="text-lg">★★★★★</span>
+                    </div>
+                    <p class="font-semibold text-gray-900 mb-2">Brigitte Touil</p>
+                    <p class="text-gray-600 italic mb-2">vor 4 Jahren</p>
+                    <p class="text-gray-700">
+                        "Herr Schönbrunn hat genau vermessen und eine perfekte Lösung geschaffen. Sehr professionell und zuverlässig!"
+                    </p>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-card">
+                    <div class="flex gap-1 mb-3">
+                        <span class="text-lg">★★★★★</span>
+                    </div>
+                    <p class="font-semibold text-gray-900 mb-2">Dietmar Baier</p>
+                    <p class="text-gray-600 italic mb-2">vor 3 Jahren</p>
+                    <p class="text-gray-700">
+                        "Qualitätsarbeit auf höchstem Niveau. Genaue Handwerkskunst und kundenfreundlicher Service!"
+                    </p>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="review-card">
+                    <div class="flex gap-1 mb-3">
+                        <span class="text-lg">★★★★★</span>
+                    </div>
+                    <p class="font-semibold text-gray-900 mb-2">Tobias Althoff</p>
+                    <p class="text-gray-600 italic mb-2">vor 5 Jahren</p>
+                    <p class="text-gray-700">
+                        "Wunderbare Arbeit! Der Schreiner hat sich Zeit genommen und alles perfekt angefertigt."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-[#FAFAF8]">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <p class="text-[var(--primary)] font-semibold text-sm tracking-widest uppercase mb-2">Kontakt</p>
+                <h2 class="text-4xl font-bold mb-4">Lassen Sie uns zusammenarbeiten</h2>
+                <p class="text-gray-600 text-lg">
+                    Sprechen Sie uns an – wir freuen uns auf Ihr Projekt!
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <!-- Phone -->
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-lg mx-auto mb-4" style="background: var(--primary);">
+                        <svg class="w-8 h-8 m-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 0 1 2-2h3.28a1 1 0 0 1 .948.684l1.498 4.493a1 1 0 0 1-.502 1.21l-2.257 1.13a11.042 11.042 0 0 0 5.516 5.516l1.13-2.257a1 1 0 0 1 1.21-.502l4.493 1.498a1 1 0 0 1 .684.949V19a2 2 0 0 1-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold mb-2">Telefon</h3>
+                    <a href="tel:0221599194" class="text-[var(--primary)] font-semibold hover:underline">0221 5991941</a>
+                </div>
+
+                <!-- Email -->
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-lg mx-auto mb-4" style="background: var(--primary);">
+                        <svg class="w-8 h-8 m-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold mb-2">Email</h3>
+                    <a href="mailto:info@schreinerei-schoenbrunn.de" class="text-[var(--primary)] font-semibold hover:underline">info@schreinerei-schoenbrunn.de</a>
+                </div>
+
+                <!-- Address -->
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-lg mx-auto mb-4" style="background: var(--primary);">
+                        <svg class="w-8 h-8 m-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold mb-2">Adresse</h3>
+                    <p class="text-gray-600">Hugo-Junkers-Straße 64<br>50739 Köln</p>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <form class="bg-white p-8 rounded-lg shadow-lg">
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <input type="text" placeholder="Ihr Name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--primary)]" required>
+                    <input type="email" placeholder="Ihre E-Mail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--primary)]" required>
+                </div>
+                <input type="text" placeholder="Betreff" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--primary)] mb-6" required>
+                <textarea placeholder="Beschreiben Sie Ihr Projekt..." rows="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[var(--primary)] mb-6 resize-none" required></textarea>
+                <button type="submit" class="btn-primary w-full">Nachricht senden</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--text-dark)] text-white py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="font-bold mb-4">Schreinerei Schönbrunn</h4>
+                    <p class="text-gray-400 text-sm">
+                        Handwerkliche Exzellenz seit 1968. Maßgefertigte Möbel und hochwertiger Innenausbau.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Leistungen</h4>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li><a href="#" class="hover:text-white transition">Möbelbau</a></li>
+                        <li><a href="#" class="hover:text-white transition">Innenausbau</a></li>
+                        <li><a href="#" class="hover:text-white transition">Außenprojekte</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Unternehmen</h4>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li><a href="#about" class="hover:text-white transition">Über uns</a></li>
+                        <li><a href="#reviews" class="hover:text-white transition">Bewertungen</a></li>
+                        <li><a href="#contact" class="hover:text-white transition">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Öffnungszeiten</h4>
+                    <p class="text-gray-400 text-sm">
+                        Mo–Fr: 08:00 – 14:00 Uhr<br>
+                        <span class="text-gray-500 text-xs">Termine nach Vereinbarung</span>
+                    </p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 flex flex-col sm:flex-row justify-between items-center text-gray-400 text-sm">
+                <p>&copy; 2024 Schreinerei Schönbrunn. Alle Rechte vorbehalten.</p>
+                <div class="flex gap-6 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-white transition">Datenschutz</a>
+                    <a href="#" class="hover:text-white transition">Impressum</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        document.querySelector('.burger-menu').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.querySelector('.mobile-menu').classList.toggle('active');
+        });
+
+        // Mobile Menu Close on Link Click
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.burger-menu').classList.remove('active');
+                document.querySelector('.mobile-menu').classList.remove('active');
+            });
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // GSAP ScrollTrigger Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Fade in cards on scroll
+        gsap.utils.toArray('.card').forEach(card => {
+            gsap.set(card, { opacity: 0, y: 40 });
+            ScrollTrigger.create({
+                trigger: card,
+                onEnter: () => {
+                    gsap.to(card, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' });
+                }
+            });
+        });
+
+        // Fade in review cards
+        gsap.utils.toArray('.review-card').forEach((card, i) => {
+            gsap.set(card, { opacity: 0, x: -20 });
+            ScrollTrigger.create({
+                trigger: card,
+                onEnter: () => {
+                    gsap.to(card, { opacity: 1, x: 0, duration: 0.6, delay: i * 0.1, ease: 'power2.out' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

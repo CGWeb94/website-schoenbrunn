@@ -1,0 +1,5 @@
+# Auto-generated – update when known
+Domain:         schreinerei-schoenbrunn.de
+GitHub-Repo:    github.com/CGWeb94/website-schoenbrunn
+Vercel-Projekt: website-schoenbrunn
+Canonical-URL:  https://schreinerei-schoenbrunn.de
